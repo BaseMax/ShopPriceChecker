@@ -299,12 +299,22 @@ const render = () => {
         const options_html = filter.options.map(option => {
             const selected = selections.find(selection => selection.filter === filter.slug && selection.value === option.slug);
             const selected_class = selected ? ' selected' : '';
+
             if(selected) {
                 console.log("option:", option);
                 tmp_selections_values.push(option.slug);
                 tmp_selections[filter.slug] = option.slug;
             }
 
+            const tmp_copy = Object.assign({}, tmp_selections);
+            delete tmp_copy[filter.slug];
+            // console.log("===>", tmp_copy, tmp_selections);
+            const supportedOptions = getFiltersWithClauses(tmp_copy, filter.slug);
+            // console.log("tmp_selections: ", tmp_selections);
+            // console.log("supportedOptions: ", supportedOptions);
+
+            if(!supportedOptions.includes(option.slug))
+                return '';
             return `
                 <div class="filter-option filter-option-${filter.slug}${selected_class}" data-filter="${filter.slug}" data-value="${option.slug}" data-id="${option.id}">
                     ${
@@ -316,6 +326,9 @@ const render = () => {
             `;
         }).join('')
 
+        if(options_html === "") {
+            return '';
+        }
         return `
             <div class="filter" data-filter-id="${filter.id}" data-filter-slug="${filter.slug}" data-filter-name="${filter.name}">
                 <div class="filter-name">${filter.name}</div>
