@@ -11,7 +11,7 @@ function update() {
     //     console.log("option: ", option);
     //     option.addEventListener("click", changeFilterValueReload);
     // }
-    options.forEach(option => option.addEventListener("click", changeFilterValueReload))
+    options.forEach(option => option.addEventListener("click", () => {changeFilterValueReload(option.dataset.filter, option.dataset.value)}));
 }
 
 function changeFilterValueReload(filter, value) {
