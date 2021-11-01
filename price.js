@@ -5,6 +5,7 @@
  */
 
 const state = {
+    defaultPrice: 99999,
     selections: [
         { filter: 'color', value: undefined },
         { filter: 'size', value: undefined },
@@ -135,7 +136,15 @@ const render = () => {
     //     </div>
     // `;
 
+    const tmp_selections = [];
     const filters_html = filters.map(filter => {
+        console.log(tmp_selections);
+
+        // if(checkHasPricesForPrefix(tmp_selections) === true)
+        //     return;
+
+        let this_filter_has_a_selection = false;
+
         return `
             <div class="filter" data-filter-id="${filter.id}" data-filter-slug="${filter.slug}" data-filter-name="${filter.name}">
                 <div class="filter-name">${filter.name}</div>
@@ -144,6 +153,11 @@ const render = () => {
                         filter.options.map(option => {
                             const selected = selections.find(selection => selection.filter === filter.slug && selection.value === option.slug);
                             const selected_class = selected ? ' selected' : '';
+                            if(selected) {
+                                this_filter_has_a_selection = true;
+                                tmp_selections.push(option.slug);
+                            }
+
                             return `
                                 <div class="filter-option filter-option-${filter.slug}${selected_class}" data-filter="${filter.slug}" data-value="${option.slug}" data-id="${option.id}">
                                     ${
@@ -158,13 +172,18 @@ const render = () => {
                 </div>
             </div>
         `;
+
+        if(!this_filter_has_a_selection) {
+            tmp_selections.push(undefined)
+        }
+
     }).join('');
 
     const product_html = `
         <div class="product">
             ${filters_html}
             <div class="product-price-box">
-                <span class="product-price">${5000}</span>
+                <span class="product-price">${getSelectedPrice() ?? state.defaultPrice}</span>
             </div>
         </div>`;
     console.log(product_html);
@@ -180,19 +199,27 @@ const render = () => {
 //     console.log(state.prices);
 // };
 
+console.log("initSelect:");
 initSelect();
 
+console.log("getSelectedPrice:");
 const p1= getSelectedPrice();
 console.log(p1);
 
+console.log("getSelectedFilters:");
 const g = getSelectedFilters();
 console.log(g);
 
+console.log("getPrice:");
 const p2 = getPrice(['red', 'large']);
 console.log(p2);
 
-render();
+// render
+console.log("render:");
+// render();
+
 // checkHasPricesForPrefix
+console.log("checkHasPricesForPrefix:");
 const a = checkHasPricesForPrefix(['red', 'large']);
 console.log(a, true);
 const b = checkHasPricesForPrefix(['red']);
@@ -204,17 +231,17 @@ console.log(d, true);
 const e = checkHasPricesForPrefix(['green']);
 console.log(e, true);
 
-
 // createFiltersWithOrder
-console.log("Test createFiltersWithOrder:");
+console.log("createFiltersWithOrder:");
 const k = createFilterNamesWithOrder(['size', 'color']);
 console.log(k);
 
+console.log("createFilterNamesWithOrder:");
 const q = createFilterNamesWithOrder(['color', 'size']);
 console.log(q);
 
 // createFiltersWithOrder
-console.log("Test createFiltersWithOrder:");
+console.log("createFiltersWithOrder:");
 const h = createFiltersWithOrder({
     size: 'small',
     color: 'red'
