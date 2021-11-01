@@ -212,10 +212,9 @@ const getFiltersWithClauses = (clauses, want_filter) => { // Note: the output of
                 regex.lastIndex++;
             }
 
-            // The result can be accessed through the `m`-variable.
             // m.forEach((match, groupIndex) => {
             //     if(groupIndex === want_filter_index) {
-            //         console.log(`Found match, group ${groupIndex}: ${match}`);
+            //         console.log(`${groupIndex}: ${match}`);
             //         all_supported_field.push(match);
             //     }
             // });
@@ -345,29 +344,29 @@ const render = () => {
 
 initSelect();
 
-// changeFilterValue('color', 'green');
-// console.log( render() );
+changeFilterValue('color', 'green');
+console.log( render() );
 console.log( state );
 
-console.log("getFiltersWithClauses:");
-const o = getFiltersWithClauses({}, 'size');
-console.log(o);
+// console.log("getFiltersWithClauses:");
+// const o = getFiltersWithClauses({}, 'size');
+// console.log(o);
 
-const o1 = getFiltersWithClauses({color: 'red'}, 'size');
-console.log(o1);
+// const o1 = getFiltersWithClauses({color: 'red'}, 'size');
+// console.log(o1);
 
-const o2 = getFiltersWithClauses({color: 'blue'}, 'size');
-console.log(o2);
+// const o2 = getFiltersWithClauses({color: 'blue'}, 'size');
+// console.log(o2);
 
-const o3 = getFiltersWithClauses({color: 'green'}, 'size');
-console.log(o3);
+// const o3 = getFiltersWithClauses({color: 'green'}, 'size');
+// console.log(o3);
 
-const o4 = getFiltersWithClauses({size: 'small'}, 'color');
-console.log(o4);
+// const o4 = getFiltersWithClauses({size: 'small'}, 'color');
+// console.log(o4);
 
-const o5 = getFiltersWithClauses({size: 'medium'}, 'color');
-console.log(o5);
+// const o5 = getFiltersWithClauses({size: 'medium'}, 'color');
+// console.log(o5);
 
-const o6 = getFiltersWithClauses({size: 'large'}, 'color');
-console.log(o6);
+// const o6 = getFiltersWithClauses({size: 'large'}, 'color');
+// console.log(o6);
 

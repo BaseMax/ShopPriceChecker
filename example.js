@@ -89,6 +89,7 @@ console.log("\nrender:");
 const res2 = render();
 console.log(res2);
 
+console.log("getFiltersWithClauses:");
 const o = getFiltersWithClauses({}, 'size');
 console.log(o);
 
@@ -109,3 +110,4 @@ console.log(o5);
 
 const o6 = getFiltersWithClauses({size: 'large'}, 'color');
 console.log(o6);
+
