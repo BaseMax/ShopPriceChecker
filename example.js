@@ -3,7 +3,22 @@ const app = document.querySelector("#app");
 function update() {
     const res = render();
     app.innerHTML = res;
+
+    const options = document.querySelectorAll(".filter-option");
+    console.log("options: ", options);
+
+    // for(const option of options) {
+    //     console.log("option: ", option);
+    //     option.addEventListener("click", changeFilterValueReload);
+    // }
+    options.forEach(option => option.addEventListener("click", changeFilterValueReload))
 }
+
+function changeFilterValueReload(filter, value) {
+    changeFilterValue(filter, value);
+    update();
+}
+
 window.addEventListener("load", update);
 
 console.log("\ninitSelect:");
