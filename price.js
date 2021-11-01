@@ -141,7 +141,7 @@ const checkHasPricesForPrefix = (filterSlugs) => {
     return state.prices_keys.map(key => key.startsWith(selectionString)).includes(true);
 };
 
-const getFiltersWithClauses = (clauses, want_filter) => {
+const getFiltersWithClauses = (clauses, want_filter) => { // Note: the output of this function is not ordered keys and is not ordered.
     // re-order the keys
     clauses = createFiltersWithOrder(clauses);
     const clausesKeys = Object.keys(clauses);
@@ -154,6 +154,8 @@ const getFiltersWithClauses = (clauses, want_filter) => {
     
     const all_filters = state.filters_keys;
     // console.log("all_filters: ", all_filters);
+
+    // const want_filter_index = all_filters.indexOf(want_filter);
 
     const all_want_options = [];
     state.filters
@@ -178,31 +180,51 @@ const getFiltersWithClauses = (clauses, want_filter) => {
         if(pattern !== "^")
             pattern += "_";
         if(clauses[filter]) {
-            pattern += `(${clauses[filter]}|)`;
+            pattern += `(?<${filter}>${clauses[filter]}|)`;
         } else {
-            pattern += `([^\\${PIECE}]+|)`;
+            pattern += `(?<${filter}>[^\\${PIECE}]+|)`;
         }
     });
     if(pattern === '^') {
         return [];
     }
     pattern += '$';
-    console.log("pattern: ", pattern);
+    // console.log("pattern: ", pattern);
 
     const all_supported_field = [];
     // loop state.prices and get `key` of each item
     // console.log(state.prices);
     for(const price_key in state.prices) {
-        const reg = new RegExp(pattern, 'g'); // Note: cannot define this Reg variable out side the loop. we need to redefine this everytime inside iterate...
-        const match_reg = reg.test(price_key);
-        console.log(reg, price_key, match_reg);
-        if(match_reg) {
-            const match_exec = reg.exec(price_key);
-            console.log(match_exec);
-            all_supported_field.push(price_key);
+        // const reg = new RegExp(pattern, 'gm'); // Note: cannot define this Reg variable out side the loop. we need to redefine this everytime inside iterate...
+        // const match_reg = reg.test(price_key);
+        // console.log(reg, price_key, match_reg);
+        // if(match_reg) {
+        //     const match_exec = reg.exec(price_key);
+        //     console.log(match_exec);
+        //     all_supported_field.push(price_key);
+        // }
+
+        const regex = new RegExp(pattern, 'mg');
+        let m;
+        while ((m = regex.exec(price_key)) !== null) {
+            // This is necessary to avoid infinite loops with zero-width matches
+            if (m.index === regex.lastIndex) {
+                regex.lastIndex++;
+            }
+
+            // The result can be accessed through the `m`-variable.
+            // m.forEach((match, groupIndex) => {
+            //     if(groupIndex === want_filter_index) {
+            //         console.log(`Found match, group ${groupIndex}: ${match}`);
+            //         all_supported_field.push(match);
+            //     }
+            // });
+
+            // console.log(m);
+            all_supported_field.push(m.groups[want_filter]);
         }
     }
-    
+
     return all_supported_field;
 };
 
