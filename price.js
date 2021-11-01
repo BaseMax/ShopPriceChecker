@@ -60,6 +60,10 @@ const state = {
     },
 };
 
+const getSelectedFilters = () => {
+    return state.selections.map(select => select.value || '');
+};
+
 // get price of selected filters from `state.prices[state.selections...]`
 const getSelectedPrice = () => {
     return getPrice(
@@ -74,6 +78,15 @@ const getPrice = (filterSlugs) => {
     if(selectionPrice?.price !== null)
         return selectionPrice;
     return undefined;
+};
+
+const checkHasPricesForPrefix = (filterSlugs) => {
+    const selectionString = filterSlugs.join('_');
+    if(!state.prices_keys) {
+        state.prices_keys = Object.keys(state.prices);
+    }
+    // console.log(state.prices_keys);
+    return state.prices_keys.map(key => key.startsWith(selectionString)).includes(true);
 };
 
 const initSelect = () => {
@@ -92,10 +105,7 @@ const render = () => {
     const selections = state.selections;
     const filters = state.filters;
     const prices = state.prices;
-
-    const price = prices[`${selections[0].value || ''}_${selections[1].value || ''}`];
-    console.log(prices);
-    console.log(price);
+    const price = getSelectedPrice();
 
     // const price_html = `
     //     <div class="price">
@@ -112,7 +122,6 @@ const render = () => {
                     ${
                         filter.options.map(option => {
                             const selected = selections.find(selection => selection.filter === filter.slug && selection.value === option.slug);
-                            console.log(selected);
                             const selected_class = selected ? ' selected' : '';
                             return `
                                 <div class="filter-option filter-option-${filter.slug}${selected_class}" data-filter="${filter.slug}" data-value="${option.slug}" data-id="${option.id}">
@@ -155,7 +164,21 @@ initSelect();
 const p1= getSelectedPrice();
 console.log(p1);
 
+const g = getSelectedFilters();
+console.log(g);
+
 const p2 = getPrice(['red', 'large']);
 console.log(p2);
 
 render();
+
+const a = checkHasPricesForPrefix(['red', 'large']);
+console.log(a, true);
+const b = checkHasPricesForPrefix(['red']);
+console.log(b, true);
+const c = checkHasPricesForPrefix(['red', 'small']);
+console.log(c, false);
+const d = checkHasPricesForPrefix(['green', 'small']);
+console.log(d, true);
+const e = checkHasPricesForPrefix(['green']);
+console.log(e, true);
