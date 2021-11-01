@@ -144,25 +144,8 @@ const initSelect = () => {
 const render = () => {
     const selections = state.selections;
     const filters = state.filters;
-    const prices = state.prices;
-    const price = getSelectedPrice();
 
-    // const price_html = `
-    //     <div class="price">
-    //         <span class="price-value">${price.price}</span>
-    //         <span class="price-off">${price.off}</span>
-    //     </div>
-    // `;
-
-    const tmp_selections = [];
     const filters_html = filters.map(filter => {
-        console.log(tmp_selections);
-
-        // if(checkHasPricesForPrefix(tmp_selections) === true)
-        //     return;
-
-        let this_filter_has_a_selection = false;
-
         return `
             <div class="filter" data-filter-id="${filter.id}" data-filter-slug="${filter.slug}" data-filter-name="${filter.name}">
                 <div class="filter-name">${filter.name}</div>
@@ -171,10 +154,6 @@ const render = () => {
                         filter.options.map(option => {
                             const selected = selections.find(selection => selection.filter === filter.slug && selection.value === option.slug);
                             const selected_class = selected ? ' selected' : '';
-                            if(selected) {
-                                this_filter_has_a_selection = true;
-                                tmp_selections.push(option.slug);
-                            }
 
                             return `
                                 <div class="filter-option filter-option-${filter.slug}${selected_class}" data-filter="${filter.slug}" data-value="${option.slug}" data-id="${option.id}">
@@ -191,10 +170,6 @@ const render = () => {
             </div>
         `;
 
-        if(!this_filter_has_a_selection) {
-            tmp_selections.push(undefined)
-        }
-
     }).join('');
 
     const product_html = `
@@ -207,26 +182,16 @@ const render = () => {
     console.log(product_html);
 };
 
-// const choose = (filter_type, filter_value_id) => {
-//     state.selections.forEach(selection => {
-//         if (selection.filter === filter_type) {
-//             selection.value = filter_value_id;
-//         }
-//     });
-//     console.log(state.selections);
-//     console.log(state.prices);
-// };
-
 console.log("\ninitSelect:");
 initSelect();
-
-console.log("\ngetFinalPrice");
-const w = getFinalPrice();
-console.log(w);
 
 console.log("\ngetSelectedPrice:");
 const p1= getSelectedPrice();
 console.log(p1);
+
+console.log("\ngetFinalPrice");
+const w = getFinalPrice();
+console.log(w);
 
 console.log("\ngetSelectedFilters:");
 const g = getSelectedFilters();
