@@ -1,25 +1,28 @@
-const app = document.querySelector("#app");
+const isBrowser = typeof window !== 'undefined'
 
-function update() {
-    const res = render();
-    app.innerHTML = res;
+if(isBrowser) {
+    const app = document.querySelector("#app");
 
-    const options = document.querySelectorAll(".filter-option");
-    console.log("options: ", options);
-
-    // for(const option of options) {
-    //     console.log("option: ", option);
-    //     option.addEventListener("click", changeFilterValueReload);
-    // }
-    options.forEach(option => option.addEventListener("click", () => {changeFilterValueReload(option.dataset.filter, option.dataset.value)}));
+    function update() {
+        const res = render();
+        app.innerHTML = res;
+    
+        const options = document.querySelectorAll(".filter-option");
+        console.log("options: ", options);
+    
+        // for(const option of options) {
+        //     console.log("option: ", option);
+        //     option.addEventListener("click", changeFilterValueReload);
+        // }
+        options.forEach(option => option.addEventListener("click", () => {changeFilterValueReload(option.dataset.filter, option.dataset.value)}));
+    }
+    
+    function changeFilterValueReload(filter, value) {
+        changeFilterValue(filter, value);
+        update();
+    }
+    window.addEventListener("load", update);
 }
-
-function changeFilterValueReload(filter, value) {
-    changeFilterValue(filter, value);
-    update();
-}
-
-window.addEventListener("load", update);
 
 console.log("\ninitSelect:");
 initSelect();

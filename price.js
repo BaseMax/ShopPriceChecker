@@ -142,9 +142,18 @@ const checkHasPricesForPrefix = (filterSlugs) => {
 };
 
 const getFiltersWithClauses = (clauses, want_filter) => {
+    // re-order the keys
+    clauses = createFiltersWithOrder(clauses);
+    const clausesKeys = Object.keys(clauses);
+    const clausesValues = Object.values(clauses);
 
     console.log("want_filter: ", want_filter)
     console.log("clauses: ", clauses);
+    console.log("clausesKeys: ", clausesKeys);
+    console.log("clausesValues: ", clausesValues);
+    
+    const all_filters = state.filters_keys;
+    console.log("all_filters: ", all_filters);
 
     const all_want_options = [];
     state.filters
@@ -157,8 +166,37 @@ const getFiltersWithClauses = (clauses, want_filter) => {
                 }
             });
     // console.log(all_want_options);
+
+    // check if clauses is a empty object {}
+    if(clausesKeys.length === 0) {
+        return all_want_options;
+    }
     
-    return all_want_options;
+    // const pattern = `${clausesValues.join('_')}`;
+    let pattern = '';
+    all_filters.forEach(filter => {
+        // console.log(filter);
+        if(pattern !== "")
+            pattern += "_";
+        if(clauses[filter]) {
+            pattern += clauses[filter];
+        } else {
+            pattern += `([^\\_]+)`;
+        }
+    });
+    // console.log("pattern: ", pattern);
+    const reg = new RegExp(pattern, 'g');
+
+    // loop state.prices and get `key` of each item
+    // console.log(state.prices);
+    for(const price_key in state.prices) {
+        console.log(price_key);
+        if(reg.test(price_key)) {
+
+        }
+    }
+    
+    return undefined;
 };
 
 const fillUndefinedSelectionValues = () => {
@@ -192,8 +230,17 @@ const fillUndefinedSelectionValues = () => {
 const initSelect = () => {
     let tmp_selections = [];
 
+    let add_filters_keys = false;
+    if(!state.filters_keys) {
+        state.filters_keys = [];
+        add_filters_keys = true;
+    }
+
     state.filters.forEach((filter, filter_index) => {
         if(filter.options.length === 0) return;
+
+        state.filters_keys.push(filter.slug);
+
         filter.options.forEach((option, option_index) => {
             tmp_selections.push(option.slug);
             if(checkHasPricesForPrefix(tmp_selections)) {
@@ -225,7 +272,7 @@ const render = () => {
             const selected = selections.find(selection => selection.filter === filter.slug && selection.value === option.slug);
             const selected_class = selected ? ' selected' : '';
             if(selected) {
-                // console.log("option:", option);
+                console.log("option:", option);
                 tmp_selections_values.push(option.slug);
                 tmp_selections[filter.slug] = option.slug;
             }
@@ -266,3 +313,31 @@ const render = () => {
     // console.log(product_html);
     return product_html;
 };
+
+initSelect();
+
+// changeFilterValue('color', 'green');
+// console.log( render() );
+console.log( state );
+
+const o = getFiltersWithClauses({}, 'size');
+console.log(o);
+
+const o1 = getFiltersWithClauses({color: 'red'}, 'size');
+console.log(o1);
+
+const o2 = getFiltersWithClauses({color: 'blue'}, 'size');
+console.log(o2);
+
+const o3 = getFiltersWithClauses({color: 'green'}, 'size');
+console.log(o3);
+
+const o4 = getFiltersWithClauses({size: 'small'}, 'color');
+console.log(o4);
+
+const o5 = getFiltersWithClauses({size: 'medium'}, 'color');
+console.log(o5);
+
+const o6 = getFiltersWithClauses({size: 'large'}, 'color');
+console.log(o6);
+
