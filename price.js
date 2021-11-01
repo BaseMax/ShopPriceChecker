@@ -60,6 +60,17 @@ const state = {
     },
 };
 
+const createFiltersWithOrder = (filters) => {
+    let orderedFilters = {};
+    state.filters.map(filter => filter.slug).forEach((filterSlug, index) => {
+        if(filters[filterSlug]) {
+            orderedFilters[filterSlug] = filters[filterSlug];
+        }
+    });
+    // console.log(filters);
+    return orderedFilters;
+};
+
 const getSelectedFilters = () => {
     return state.selections.map(select => select.value || '');
 };
@@ -171,7 +182,7 @@ const p2 = getPrice(['red', 'large']);
 console.log(p2);
 
 render();
-
+// checkHasPricesForPrefix
 const a = checkHasPricesForPrefix(['red', 'large']);
 console.log(a, true);
 const b = checkHasPricesForPrefix(['red']);
@@ -182,3 +193,11 @@ const d = checkHasPricesForPrefix(['green', 'small']);
 console.log(d, true);
 const e = checkHasPricesForPrefix(['green']);
 console.log(e, true);
+
+
+// createFiltersWithOrder
+const h = createFiltersWithOrder({
+    size: 'small',
+    color: 'red'
+});
+console.log(h);
