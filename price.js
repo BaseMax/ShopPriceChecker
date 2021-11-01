@@ -85,6 +85,17 @@ const createFiltersWithOrder = (filters) => {
     return orderedFilters;
 };
 
+const changeFilterValue = (filterSlug, optionValue) => {
+    state.selections.map((selection, selection_index) => {
+        if(selection.filter === filterSlug) {
+            state.selections[selection_index].value = optionValue;
+        }
+    })
+    // const selectionItem = state.selections.filter(selection => selection.filter === filterSlug)
+    // console.log(selectionItem);
+    // selectionItem.value = optionValue;
+};
+
 const getSelectedFilters = () => {
     return state.selections.map(select => select.value || '');
 };
@@ -179,11 +190,13 @@ const render = () => {
                 <span class="product-price">${getFinalPrice()}</span>
             </div>
         </div>`;
-    console.log(product_html);
+    // console.log(product_html);
+    return product_html;
 };
 
 console.log("\ninitSelect:");
 initSelect();
+console.log(state.selections);
 
 console.log("\ngetSelectedPrice:");
 const p1= getSelectedPrice();
@@ -203,7 +216,8 @@ console.log(p2);
 
 // render
 console.log("\nrender:");
-// render();
+const res = render();
+console.log(res);
 
 // checkHasPricesForPrefix
 console.log("\ncheckHasPricesForPrefix:");
@@ -234,3 +248,13 @@ const h = createFiltersWithOrder({
     color: 'red'
 });
 console.log(h);
+
+// changeFilterValue
+console.log("changeFilterValue:");
+changeFilterValue('color', 'green');
+console.log(state.selections);
+
+// render
+console.log("\nrender:");
+const res2 = render();
+console.log(res2);
