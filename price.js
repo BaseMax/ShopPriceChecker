@@ -114,12 +114,23 @@ const checkHasPricesForPrefix = (filterSlugs) => {
 const initSelect = () => {
     // auto select first option of each filter and save that at `state.selection`
     const filters = state.filters;
+
+    let tmp_selections = [];
+
     filters.forEach((filter, filter_index) => {
-        const first_option = filter.options[0];
-        state.selections[filter_index] = {
-            filter: filter.slug,
-            value: first_option.slug,
-        };
+        if(filter.options.length === 0) return;
+        filter.options.forEach((option, option_index) => {
+            tmp_selections.push(option.slug);
+            if(checkHasPricesForPrefix(tmp_selections)) {
+                state.selections[filter_index] = {
+                    filter: filter.slug,
+                    value: option.slug,
+                };
+                return;
+            } else {
+                tmp_selections.pop();
+            }
+        });
     });
 };
 
@@ -199,27 +210,27 @@ const render = () => {
 //     console.log(state.prices);
 // };
 
-console.log("initSelect:");
+console.log("\ninitSelect:");
 initSelect();
 
-console.log("getSelectedPrice:");
+console.log("\ngetSelectedPrice:");
 const p1= getSelectedPrice();
 console.log(p1);
 
-console.log("getSelectedFilters:");
+console.log("\ngetSelectedFilters:");
 const g = getSelectedFilters();
 console.log(g);
 
-console.log("getPrice:");
+console.log("\ngetPrice:");
 const p2 = getPrice(['red', 'large']);
 console.log(p2);
 
 // render
-console.log("render:");
+console.log("\nrender:");
 // render();
 
 // checkHasPricesForPrefix
-console.log("checkHasPricesForPrefix:");
+console.log("\ncheckHasPricesForPrefix:");
 const a = checkHasPricesForPrefix(['red', 'large']);
 console.log(a, true);
 const b = checkHasPricesForPrefix(['red']);
@@ -232,16 +243,16 @@ const e = checkHasPricesForPrefix(['green']);
 console.log(e, true);
 
 // createFiltersWithOrder
-console.log("createFiltersWithOrder:");
+console.log("\ncreateFiltersWithOrder:");
 const k = createFilterNamesWithOrder(['size', 'color']);
 console.log(k);
 
-console.log("createFilterNamesWithOrder:");
+console.log("\ncreateFilterNamesWithOrder:");
 const q = createFilterNamesWithOrder(['color', 'size']);
 console.log(q);
 
 // createFiltersWithOrder
-console.log("createFiltersWithOrder:");
+console.log("\ncreateFiltersWithOrder:");
 const h = createFiltersWithOrder({
     size: 'small',
     color: 'red'
