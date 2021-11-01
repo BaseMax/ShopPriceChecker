@@ -5,7 +5,10 @@
  */
 
 const state = {
-    defaultPrice: 99999,
+    defaultPrice: {
+        price: 99999,
+        off: 99997
+    },
     selections: [
         { filter: 'color', value: undefined },
         { filter: 'size', value: undefined },
@@ -91,6 +94,10 @@ const getSelectedPrice = () => {
     return getPrice(
         state.selections.map(select => select.value || '')
     );
+};
+
+const getFinalPrice = () => {
+    return getSelectedPrice() ?? state.defaultPrice;
 };
 
 const getPrice = (filterSlugs) => {
@@ -194,7 +201,7 @@ const render = () => {
         <div class="product">
             ${filters_html}
             <div class="product-price-box">
-                <span class="product-price">${getSelectedPrice() ?? state.defaultPrice}</span>
+                <span class="product-price">${getFinalPrice()}</span>
             </div>
         </div>`;
     console.log(product_html);
@@ -212,6 +219,10 @@ const render = () => {
 
 console.log("\ninitSelect:");
 initSelect();
+
+console.log("\ngetFinalPrice");
+const w = getFinalPrice();
+console.log(w);
 
 console.log("\ngetSelectedPrice:");
 const p1= getSelectedPrice();
