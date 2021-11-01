@@ -145,15 +145,15 @@ const getFiltersWithClauses = (clauses, want_filter) => {
     // re-order the keys
     clauses = createFiltersWithOrder(clauses);
     const clausesKeys = Object.keys(clauses);
-    const clausesValues = Object.values(clauses);
+    // const clausesValues = Object.values(clauses);
 
-    console.log("want_filter: ", want_filter)
-    console.log("clauses: ", clauses);
-    console.log("clausesKeys: ", clausesKeys);
-    console.log("clausesValues: ", clausesValues);
+    // console.log("want_filter: ", want_filter)
+    // console.log("clauses: ", clauses);
+    // console.log("clausesKeys: ", clausesKeys);
+    // console.log("clausesValues: ", clausesValues);
     
     const all_filters = state.filters_keys;
-    console.log("all_filters: ", all_filters);
+    // console.log("all_filters: ", all_filters);
 
     const all_want_options = [];
     state.filters
@@ -172,31 +172,38 @@ const getFiltersWithClauses = (clauses, want_filter) => {
         return all_want_options;
     }
     
-    // const pattern = `${clausesValues.join('_')}`;
-    let pattern = '';
+    let pattern = '^';
     all_filters.forEach(filter => {
         // console.log(filter);
-        if(pattern !== "")
+        if(pattern !== "^")
             pattern += "_";
         if(clauses[filter]) {
-            pattern += clauses[filter];
+            pattern += `(${clauses[filter]}|)`;
         } else {
-            pattern += `([^\\_]+)`;
+            pattern += `([^\\${PIECE}]+|)`;
         }
     });
-    // console.log("pattern: ", pattern);
-    const reg = new RegExp(pattern, 'g');
+    if(pattern === '^') {
+        return [];
+    }
+    pattern += '$';
+    console.log("pattern: ", pattern);
 
+    const all_supported_field = [];
     // loop state.prices and get `key` of each item
     // console.log(state.prices);
     for(const price_key in state.prices) {
-        console.log(price_key);
-        if(reg.test(price_key)) {
-
+        const reg = new RegExp(pattern, 'g'); // Note: cannot define this Reg variable out side the loop. we need to redefine this everytime inside iterate...
+        const match_reg = reg.test(price_key);
+        console.log(reg, price_key, match_reg);
+        if(match_reg) {
+            const match_exec = reg.exec(price_key);
+            console.log(match_exec);
+            all_supported_field.push(price_key);
         }
     }
     
-    return undefined;
+    return all_supported_field;
 };
 
 const fillUndefinedSelectionValues = () => {
@@ -320,6 +327,7 @@ initSelect();
 // console.log( render() );
 console.log( state );
 
+console.log("getFiltersWithClauses:");
 const o = getFiltersWithClauses({}, 'size');
 console.log(o);
 
