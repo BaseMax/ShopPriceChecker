@@ -20,8 +20,8 @@ const state = {
                 { id: 1, slug: 'red', name: 'قرمز', color: '#ff0000' },
                 { id: 2, slug: 'green', name: 'سبز', color: '#1bff00' },
                 { id: 3, slug: 'blue', name: 'آبی', color: '#0095ff' },
-                // { id: 4, slug: 'yellow', name: 'زرد', color: '#ffeb00' },
-                // { id: 5, slug: 'black', name: 'سیاه', color: '#000000' },
+                { id: 4, slug: 'yellow', name: 'زرد', color: '#ffeb00' },
+                { id: 5, slug: 'black', name: 'سیاه', color: '#000000' },
                 // { id: 6, slug: 'white', name: 'سفید', color: '#ffffff' },
                 // { id: 7, slug: 'gray', name: 'خاکستری', color: '#9d9d9d' },
                 // { id: 8, slug: 'brown', name: 'قهوه ای', color: '#3e3a05' },
@@ -63,6 +63,22 @@ const state = {
             off: 8700
         },
         'blue_': {
+            price: 6000,
+            off: 2700
+        },
+        'yellow_small': {
+            price: 6000,
+            off: 2700
+        },
+        'yellow_medium': {
+            price: 6000,
+            off: 2700
+        },
+        'yellow_large': {
+            price: 6000,
+            off: 2700
+        },
+        'black_': {
             price: 6000,
             off: 2700
         },
@@ -355,31 +371,8 @@ const render = () => {
     return product_html;
 };
 
-initSelect();
-
-changeFilterValue('color', 'green');
-console.log( render() );
-console.log( state );
-
-// console.log("getFiltersWithClauses:");
-// const o = getFiltersWithClauses({}, 'size');
-// console.log(o);
-
-// const o1 = getFiltersWithClauses({color: 'red'}, 'size');
-// console.log(o1);
-
-// const o2 = getFiltersWithClauses({color: 'blue'}, 'size');
-// console.log(o2);
-
-// const o3 = getFiltersWithClauses({color: 'green'}, 'size');
-// console.log(o3);
-
-// const o4 = getFiltersWithClauses({size: 'small'}, 'color');
-// console.log(o4);
-
-// const o5 = getFiltersWithClauses({size: 'medium'}, 'color');
-// console.log(o5);
-
-// const o6 = getFiltersWithClauses({size: 'large'}, 'color');
-// console.log(o6);
-
+// Debug commands:
+//     initSelect();
+//     changeFilterValue('color', 'green');
+//     console.log( render() );
+//     console.log( state );
