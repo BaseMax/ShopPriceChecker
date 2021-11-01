@@ -60,6 +60,16 @@ const state = {
     },
 };
 
+const createFilterNamesWithOrder = (filterNames) => {
+    let orderedFilters = [];
+    state.filters.map(filter => filter.slug).forEach((filterSlug, index) => {
+        if(filterNames.includes(filterSlug)) {
+            orderedFilters.push(filterSlug);
+        }
+    });
+    return orderedFilters;
+};
+
 const createFiltersWithOrder = (filters) => {
     let orderedFilters = {};
     state.filters.map(filter => filter.slug).forEach((filterSlug, index) => {
@@ -196,6 +206,15 @@ console.log(e, true);
 
 
 // createFiltersWithOrder
+console.log("Test createFiltersWithOrder:");
+const k = createFilterNamesWithOrder(['size', 'color']);
+console.log(k);
+
+const q = createFilterNamesWithOrder(['color', 'size']);
+console.log(q);
+
+// createFiltersWithOrder
+console.log("Test createFiltersWithOrder:");
 const h = createFiltersWithOrder({
     size: 'small',
     color: 'red'
