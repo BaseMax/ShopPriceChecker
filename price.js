@@ -4,6 +4,7 @@
  * Date: 11/01/2021
  */
 
+const PIECE = '_';
 const state = {
     defaultPrice: {
         price: 99999,
@@ -123,7 +124,7 @@ const getFinalPrice = () => {
 };
 
 const getPrice = (filterSlugs) => {
-    const selectionString = filterSlugs.join('_');
+    const selectionString = filterSlugs.join(PIECE);
     const selectionPrice = state.prices[selectionString];
 
     if(selectionPrice?.price !== null)
@@ -132,12 +133,32 @@ const getPrice = (filterSlugs) => {
 };
 
 const checkHasPricesForPrefix = (filterSlugs) => {
-    const selectionString = filterSlugs.join('_');
+    const selectionString = filterSlugs.join(PIECE);
     if(!state.prices_keys) {
         state.prices_keys = Object.keys(state.prices);
     }
     // console.log(state.prices_keys);
     return state.prices_keys.map(key => key.startsWith(selectionString)).includes(true);
+};
+
+const getFiltersWithClauses = (clauses, want_filter) => {
+
+    console.log("want_filter: ", want_filter)
+    console.log("clauses: ", clauses);
+
+    const all_want_options = [];
+    state.filters
+            // .filter(filter => filter.slug === want_filter)
+            // .map(filter => filter.options);
+            // .map(option => option.slug);
+            .forEach(filter => {
+                if(filter.slug === want_filter) {
+                    filter.options.forEach(option => all_want_options.push(option.slug))
+                }
+            });
+    // console.log(all_want_options);
+    
+    return all_want_options;
 };
 
 const fillUndefinedSelectionValues = () => {
@@ -192,38 +213,54 @@ const render = () => {
     const selections = state.selections;
     const filters = state.filters;
 
+    let tmp_selections_values = [];
+    let tmp_selections = {};
+
     const filters_html = filters.map(filter => {
+        // tmp_selections.push(filter.slug);
+        console.log(tmp_selections_values);
+        console.log(tmp_selections);
+
+        const options_html = filter.options.map(option => {
+            const selected = selections.find(selection => selection.filter === filter.slug && selection.value === option.slug);
+            const selected_class = selected ? ' selected' : '';
+            if(selected) {
+                // console.log("option:", option);
+                tmp_selections_values.push(option.slug);
+                tmp_selections[filter.slug] = option.slug;
+            }
+
+            return `
+                <div class="filter-option filter-option-${filter.slug}${selected_class}" data-filter="${filter.slug}" data-value="${option.slug}" data-id="${option.id}">
+                    ${
+                        filter.slug === 'color' ?
+                            `<div class="filter-option-color" style="background-color: ${option.color}"></div>` :
+                            `<span class="filter-option-name">${option.name}</span>`
+                    }
+                </div>
+            `;
+        }).join('')
+
         return `
             <div class="filter" data-filter-id="${filter.id}" data-filter-slug="${filter.slug}" data-filter-name="${filter.name}">
                 <div class="filter-name">${filter.name}</div>
                 <div class="filter-options">
-                    ${
-                        filter.options.map(option => {
-                            const selected = selections.find(selection => selection.filter === filter.slug && selection.value === option.slug);
-                            const selected_class = selected ? ' selected' : '';
-
-                            return `
-                                <div class="filter-option filter-option-${filter.slug}${selected_class}" data-filter="${filter.slug}" data-value="${option.slug}" data-id="${option.id}">
-                                    ${
-                                        filter.slug === 'color' ?
-                                            `<div class="filter-option-color" style="background-color: ${option.color}"></div>` :
-                                            `<span class="filter-option-name">${option.name}</span>`
-                                    }
-                                </div>
-                            `;
-                        }).join('')
-                    }
+                    ${options_html}
                 </div>
             </div>
         `;
 
     }).join('');
 
+    const final_price = getFinalPrice();
     const product_html = `
         <div class="product">
             ${filters_html}
             <div class="product-price-box">
-                <span class="product-price">${getFinalPrice()}</span>
+                <span class="product-price">${final_price.price}</span>
+                ${
+                    final_price.off !== null ? `<span class="product-price-off">${final_price.off}</span>` : undefined
+                }
             </div>
         </div>`;
     // console.log(product_html);
@@ -294,3 +331,24 @@ console.log(state.selections);
 console.log("\nrender:");
 const res2 = render();
 console.log(res2);
+
+const o = getFiltersWithClauses({}, 'size');
+console.log(o);
+
+const o1 = getFiltersWithClauses({color: 'red'}, 'size');
+console.log(o1);
+
+const o2 = getFiltersWithClauses({color: 'blue'}, 'size');
+console.log(o2);
+
+const o3 = getFiltersWithClauses({color: 'green'}, 'size');
+console.log(o3);
+
+const o4 = getFiltersWithClauses({size: 'small'}, 'color');
+console.log(o4);
+
+const o5 = getFiltersWithClauses({size: 'medium'}, 'color');
+console.log(o5);
+
+const o6 = getFiltersWithClauses({size: 'large'}, 'color');
+console.log(o6);
