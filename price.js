@@ -53,6 +53,10 @@ const state = {
             price: 50000,
             off: 2500
         },
+        'green_large': {
+            price: 4000,
+            off: 8700
+        },
         'green_small': {
             price: 4000,
             off: 8700
@@ -85,12 +89,19 @@ const createFiltersWithOrder = (filters) => {
     return orderedFilters;
 };
 
+const resetStateSelections = () => {
+    // set all values inside state.selections as undefiend
+    state.selections.map(selection => selection.value = undefined);
+};
+
 const changeFilterValue = (filterSlug, optionValue) => {
     state.selections.map((selection, selection_index) => {
         if(selection.filter === filterSlug) {
+            resetStateSelections();
             state.selections[selection_index].value = optionValue;
+            fillUndefinedSelectionValues();
         }
-    })
+    });
     // const selectionItem = state.selections.filter(selection => selection.filter === filterSlug)
     // console.log(selectionItem);
     // selectionItem.value = optionValue;
@@ -129,13 +140,38 @@ const checkHasPricesForPrefix = (filterSlugs) => {
     return state.prices_keys.map(key => key.startsWith(selectionString)).includes(true);
 };
 
-const initSelect = () => {
-    // auto select first option of each filter and save that at `state.selection`
-    const filters = state.filters;
-
+const fillUndefinedSelectionValues = () => {
     let tmp_selections = [];
 
-    filters.forEach((filter, filter_index) => {
+    state.filters.forEach((filter, filter_index) => {
+        if(filter.options.length === 0) return;
+
+        // console.log(filter_index, state.selections[filter_index]);
+        if(state.selections[filter_index].value !== undefined) {
+            tmp_selections.push(state.selections[filter_index].value);
+            return;
+        }
+        // console.log(filter_index, state.selections[filter_index]);
+
+        filter.options.forEach((option, option_index) => {
+            tmp_selections.push(option.slug);
+            if(checkHasPricesForPrefix(tmp_selections)) {
+                state.selections[filter_index] = {
+                    filter: filter.slug,
+                    value: option.slug,
+                };
+                return;
+            } else {
+                tmp_selections.pop();
+            }
+        });
+    });
+};
+
+const initSelect = () => {
+    let tmp_selections = [];
+
+    state.filters.forEach((filter, filter_index) => {
         if(filter.options.length === 0) return;
         filter.options.forEach((option, option_index) => {
             tmp_selections.push(option.slug);
