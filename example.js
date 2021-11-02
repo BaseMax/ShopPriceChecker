@@ -28,86 +28,86 @@ console.log("\ninitSelect:");
 initSelect();
 console.log(state.selections);
 
-console.log("\ngetSelectedPrice:");
-const p1= getSelectedPrice();
-console.log(p1);
+// console.log("\ngetSelectedPrice:");
+// const p1= getSelectedPrice();
+// console.log(p1);
 
-console.log("\ngetFinalPrice");
-const w = getFinalPrice();
-console.log(w);
+// console.log("\ngetFinalPrice");
+// const w = getFinalPrice();
+// console.log(w);
 
-console.log("\ngetSelectedFilters:");
-const g = getSelectedFilters();
-console.log(g);
+// console.log("\ngetSelectedFilters:");
+// const g = getSelectedFilters();
+// console.log(g);
 
-console.log("\ngetPrice:");
-const p2 = getPrice(['red', 'large']);
-console.log(p2);
+// console.log("\ngetPrice:");
+// const p2 = getPrice(['red', 'large']);
+// console.log(p2);
 
-// render
-console.log("\nrender:");
-const res = render();
-console.log(res);
+// // render
+// console.log("\nrender:");
+// const res = render();
+// console.log(res);
 
-// checkHasPricesForPrefix
-console.log("\ncheckHasPricesForPrefix:");
-const a = checkHasPricesForPrefix(['red', 'large']);
-console.log(a, true);
-const b = checkHasPricesForPrefix(['red']);
-console.log(b, true);
-const c = checkHasPricesForPrefix(['red', 'small']);
-console.log(c, false);
-const d = checkHasPricesForPrefix(['green', 'small']);
-console.log(d, true);
-const e = checkHasPricesForPrefix(['green']);
-console.log(e, true);
+// // checkHasPricesForPrefix
+// console.log("\ncheckHasPricesForPrefix:");
+// const a = checkHasPricesForPrefix(['red', 'large']);
+// console.log(a, true);
+// const b = checkHasPricesForPrefix(['red']);
+// console.log(b, true);
+// const c = checkHasPricesForPrefix(['red', 'small']);
+// console.log(c, false);
+// const d = checkHasPricesForPrefix(['green', 'small']);
+// console.log(d, true);
+// const e = checkHasPricesForPrefix(['green']);
+// console.log(e, true);
 
-// createFiltersWithOrder
-console.log("\ncreateFiltersWithOrder:");
-const k = createFilterNamesWithOrder(['size', 'color']);
-console.log(k);
+// // createFiltersWithOrder
+// console.log("\ncreateFiltersWithOrder:");
+// const k = createFilterNamesWithOrder(['size', 'color']);
+// console.log(k);
 
-console.log("\ncreateFilterNamesWithOrder:");
-const q = createFilterNamesWithOrder(['color', 'size']);
-console.log(q);
+// console.log("\ncreateFilterNamesWithOrder:");
+// const q = createFilterNamesWithOrder(['color', 'size']);
+// console.log(q);
 
-// createFiltersWithOrder
-console.log("\ncreateFiltersWithOrder:");
-const h = createFiltersWithOrder({
-    size: 'small',
-    color: 'red'
-});
-console.log(h);
+// // createFiltersWithOrder
+// console.log("\ncreateFiltersWithOrder:");
+// const h = createFiltersWithOrder({
+//     size: 'small',
+//     color: 'red'
+// });
+// console.log(h);
 
-// changeFilterValue
-console.log("changeFilterValue:");
-changeFilterValue('color', 'green');
-console.log(state.selections);
+// // changeFilterValue
+// console.log("changeFilterValue:");
+// changeFilterValue('color', 'green');
+// console.log(state.selections);
 
-// render
-console.log("\nrender:");
-const res2 = render();
-console.log(res2);
+// // render
+// console.log("\nrender:");
+// const res2 = render();
+// console.log(res2);
 
-console.log("getFiltersWithClauses:");
-const o = getFiltersWithClauses({}, 'size');
-console.log(o);
+// console.log("getFiltersWithClauses:");
+// const o = getFiltersWithClauses({}, 'size');
+// console.log(o);
 
-const o1 = getFiltersWithClauses({color: 'red'}, 'size');
-console.log(o1);
+// const o1 = getFiltersWithClauses({color: 'red'}, 'size');
+// console.log(o1);
 
-const o2 = getFiltersWithClauses({color: 'blue'}, 'size');
-console.log(o2);
+// const o2 = getFiltersWithClauses({color: 'blue'}, 'size');
+// console.log(o2);
 
-const o3 = getFiltersWithClauses({color: 'green'}, 'size');
-console.log(o3);
+// const o3 = getFiltersWithClauses({color: 'green'}, 'size');
+// console.log(o3);
 
-const o4 = getFiltersWithClauses({size: 'small'}, 'color');
-console.log(o4);
+// const o4 = getFiltersWithClauses({size: 'small'}, 'color');
+// console.log(o4);
 
-const o5 = getFiltersWithClauses({size: 'medium'}, 'color');
-console.log(o5);
+// const o5 = getFiltersWithClauses({size: 'medium'}, 'color');
+// console.log(o5);
 
-const o6 = getFiltersWithClauses({size: 'large'}, 'color');
-console.log(o6);
+// const o6 = getFiltersWithClauses({size: 'large'}, 'color');
+// console.log(o6);
 

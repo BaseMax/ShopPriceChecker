@@ -85,6 +85,7 @@ const state = {
     },
 };
 
+// not used
 const createFilterNamesWithOrder = (filterNames) => {
     let orderedFilters = [];
     state.filters.map(filter => filter.slug).forEach((filterSlug, index) => {
