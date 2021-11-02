@@ -9,6 +9,22 @@
 While it's too easy to support one or two filters at same time manualy.
 The challenge of this task was to supporting N* of filters, while we dont know the number of filters before fetching the data from server. I mean state manager inside Reactjs when get data from API.
 
+### Price Table
+
+| Product Detail | Price |
+| Default: | `{ price: 99999, off: 99997 }` |
+| Red Medium | `{ price: 50000, off: 4500 }` |
+| Red Large | `{ price: 50000, off: 2500 }` |
+| Green Large | `{ price: 4000, off: 8700 }` |
+| Green Small | `{ price: 4000, off: 8700 }` |
+| Blue without choose a size | `{ price: 6000, off: 2700 }` |
+| Yellow Small | `{ price: 6000, off: 2700 }` |
+| Yellow Medium | `{ price: 6000, off: 2700 }` |
+| Yellow Large | `{ price: 6000, off: 2700 }` |
+| Black without choose a size | `{ price: 6000, off: 2700 }` |
+
+**It's good to say, it's not possible to order Red without choosing size, while when you want to order Black or even Blue you cannot choose size.**
+
 ## More about the project
 
 We are building a own ecommerce platform and what we faced in is to handling different filters of a product in React JS.
