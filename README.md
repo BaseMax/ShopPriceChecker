@@ -12,6 +12,7 @@ The challenge of this task was to supporting N* of filters, while we dont know t
 ### Price Table
 
 | Product Detail | Price |
+| ---------- | ---------------------------------- |
 | Default: | `{ price: 99999, off: 99997 }` |
 | Red Medium | `{ price: 50000, off: 4500 }` |
 | Red Large | `{ price: 50000, off: 2500 }` |
