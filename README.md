@@ -1,5 +1,7 @@
 # Shop Price Checker
 
+Shopping and E-commerce: A client-side utility project for a Shop product page. Calculate the order price, and check availability with supporting N* filters.
+
 |  |  |
 | ----- | ----- |
 | ![](test.png) | ![](preview.png) |
