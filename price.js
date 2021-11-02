@@ -62,7 +62,7 @@ const state = {
             price: 4000,
             off: 8700
         },
-        'blue_': {
+        'blue_': { // When you want to buy a blue and the blue not have/support `size` filter
             price: 6000,
             off: 2700
         },
@@ -78,8 +78,8 @@ const state = {
             price: 6000,
             off: 2700
         },
-        'black_': {
-            price: 6000,
+        'black_': { // When you want to buy a black and the black not have/support `size` filter
+                price: 6000,
             off: 2700
         },
     },
