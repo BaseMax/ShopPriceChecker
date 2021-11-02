@@ -276,7 +276,7 @@ const fillUndefinedSelectionValues = () => {
 const initSelect = () => {
     let tmp_selections = [];
 
-    let add_filters_keys = false;
+    let add_filters_keys = false; // We want to make sure it's first time you are calling `initSelect` or no.
     if(!state.filters_keys) {
         state.filters_keys = [];
         add_filters_keys = true;
@@ -285,7 +285,7 @@ const initSelect = () => {
     state.filters.forEach((filter, filter_index) => {
         if(filter.options.length === 0) return;
 
-        if(add_filters_keys === trie) {
+        if(add_filters_keys === trie) { // only run if this is first time you are running `initSelect` function
             state.filters_keys.push(filter.slug);
         }
 
