@@ -1,5 +1,6 @@
 # Shop Price Checker
 
+|  |  |
 | ----- | ----- |
 | ![](test.png) | ![](preview.png) |
 
@@ -25,7 +26,7 @@ and each of that filter has some options. for example: Colors has RED, BLUE, GRE
 
 ### And so
 
-I think this is still buggy and if you want to contribute or do your bets or a nice and cool JS challenge. it's for you.
+I think this is still buggy and if you want to contribute or do your best or a nice and cool JS challenge. it's for you.
 
 Any kind of contribution are welcome.
 
