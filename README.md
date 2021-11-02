@@ -2,8 +2,8 @@
 
 Shopping and E-commerce: A client-side utility project for a Shop product page. Calculate the order price, and check availability with supporting N* filters.
 
-|  |  |
-| ----- | ----- |
+| Preview | UI Design |
+| ------------- | ---------------- |
 | ![](test.png) | ![](preview.png) |
 
 ## Challenge
