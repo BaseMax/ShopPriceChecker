@@ -1,8 +1,7 @@
 # Shop Price Checker
 
-![](test.png)
-
-![](preview.png)
+| ----- | ----- |
+| ![](test.png) | ![](preview.png) |
 
 ## Challenge
 
@@ -17,10 +16,10 @@ I have to explain more to you for make it sense.
 For a single product page, maybe there are multi filters.
 for examples:
 
-1- Colors
-2- Sizes
-3- RAM
-4- Disk space
+- Colors
+- Sizes
+- RAM
+- Disk space
 
 and each of that filter has some options. for example: Colors has RED, BLUE, GREEN, etc.
 
