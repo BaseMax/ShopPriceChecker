@@ -125,6 +125,7 @@ const changeFilterValue = (filterSlug, optionValue) => {
     // selectionItem.value = optionValue;
 };
 
+// not used
 const getSelectedFilters = () => {
     return state.selections.map(select => select.value || '');
 };
@@ -284,7 +285,9 @@ const initSelect = () => {
     state.filters.forEach((filter, filter_index) => {
         if(filter.options.length === 0) return;
 
-        state.filters_keys.push(filter.slug);
+        if(add_filters_keys === trie) {
+            state.filters_keys.push(filter.slug);
+        }
 
         filter.options.forEach((option, option_index) => {
             tmp_selections.push(option.slug);
