@@ -285,7 +285,7 @@ const initSelect = () => {
     state.filters.forEach((filter, filter_index) => {
         if(filter.options.length === 0) return;
 
-        if(add_filters_keys === trie) { // only run if this is first time you are running `initSelect` function
+        if(add_filters_keys === true) { // only run if this is first time you are running `initSelect` function
             state.filters_keys.push(filter.slug);
         }
 
